@@ -11,16 +11,20 @@ export default class Kanban extends Component {
     static Task = () => {};
 
     render () {
-        const { columns } = this.props;
+        const { children, columns } = this.props;
+        const stories = children.map(story => React.cloneElement(story, { ...story.props, columns }));
+        const kanbanColumns = [ '', ...columns ];
 
         return (
             <Style.Kanban>
 
-                { [ '', ...columns ].map(column => (
+                { kanbanColumns.map(column => (
                     <Style.Column key={ column }>
                         { column }
                     </Style.Column>
                 )) }
+
+                { stories }
 
             </Style.Kanban>
         )
